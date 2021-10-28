@@ -12,9 +12,9 @@ assumption <- function(x){
   D <- lm(height ~ weight,dat)
   a <- ggplot(dat)+geom_point(mapping=aes(x=height,y=weight))+geom_abline(intercept = D$coefficients[[1]],slope=D$coefficients[[2]],lwd=2)+ggtitle("I) Y vs X")
 
-  b <- ggplot(dat)+geom_point(mapping=aes(x=D$fitted.values ,y=D$residuals)) + geom_hline(yintercept=0,lwd=2)+ggtitle("II) Residual plot")+ylab("Residuals")
+  b <- ggplot(dat)+geom_point(mapping=aes(x=D$fitted.values ,y=D$residuals)) + geom_hline(yintercept=0,lwd=2)+ggtitle("II) Residual plot")+ylab("Residuals")+xlab("Fitted values")
 
-  c <- ggplot(dat)+geom_histogram(mapping=aes(x=D$residuals),bins=40) +ggtitle("III) Distribution is normal")
+  c <- ggplot(dat)+geom_histogram(mapping=aes(x=D$residuals),bins=40) +ggtitle("III) Distribution is normal")+xlab("Residuals")
 
   print((a+b)/c)
 }
