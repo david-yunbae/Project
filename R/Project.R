@@ -55,6 +55,45 @@ assumption <- function(x,testtype){
   }
 }
 
+assumptiongraph <- function(x,testtype){
+  dat <- readr::read_csv(x,show_col_types = FALSE)
+
+  #Prepare assumption for lm
+  D <- lm(height ~ weight,dat)
+  a <- ggplot2::ggplot(dat,aes(x=height,y=weight))+ geom_point() + stat_smooth(method="lm", col="red") +ggtitle("I) Y vs X")
+
+  b <- ggplot2::ggplot(dat)+geom_point(mapping=aes(x=D$fitted.values ,y=D$residuals)) + geom_hline(yintercept=0,lwd=2)+ggtitle("II) Residual plot")+ylab("Residuals")+xlab("Fitted values")
+
+  c <- ggplot2::ggplot(dat)+geom_histogram(mapping=aes(x=D$residuals),bins=40) +ggtitle("III) Distribution is normal")+xlab("Residuals")
+
+  #Prepare assumption for ttest
+  d <- ggplot2::ggplot(dat, aes(sample=height, group=gender, colour=gender))+geom_qq()+geom_qq_line()+xlab("theoretical")+ylab("sample")
+
+  e <- dat %>% group_by(gender) %>% summarise(n=n(),mu=mean(height),sd=sd(height))
+
+  #Preapre assumption for chitest
+  datm <- dat %>% filter(gender=="Male") %>% select(phys)
+  datf <- dat %>% filter(gender=="Female") %>% select(phys)
+
+  datmn <- datm %>% filter(phys=="None") %>% count()
+  datmm <- datm %>% filter(phys=="Moderate") %>% count()
+  datmi <- datm %>% filter(phys=="Intense") %>% count()
+
+  datfn <- datf %>% filter(phys=="None") %>% count()
+  datfm <- datf %>% filter(phys=="Moderate") %>% count()
+  datfi <- datf %>% filter(phys=="Intense") %>% count()
+
+  table <- dplyr::tibble(Male=c(datmn[[1]],datmm[[1]],datmi[[1]]),Female=c(datfn[[1]],datfm[[1]],datfi[[1]]))
+
+  if (testtype=="lm"){
+    print((a+b)/c)
+  } else if (testtype=="ttest"){
+    print(d)
+  } else if (testtype=="chitest"){
+    print(table)
+  }
+}
+
 wrapperlm <- function(x){
   dat <- readr::read_csv(x,show_col_types = FALSE)
   B <- lm(height~weight,dat)$coefficients[[2]]
