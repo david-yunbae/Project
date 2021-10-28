@@ -144,14 +144,6 @@ wrapperchitest <- function(x){
   out
 }
 
-wrapperlm("project.csv")
-wrapperttest("project.csv")
-wrapperchitest("project.csv")
-
-printer(wrapperlm("project.csv"))
-printer(wrapperttest("project.csv"))
-printer(wrapperchitest("project.csv"))
-
 printer.myr <- function(x){
   if(x$type=="lm"){
     cat(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Relevant test: Linear regression <<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n \n")
