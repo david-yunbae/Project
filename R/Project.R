@@ -69,28 +69,28 @@ assumptiongraph <- function(x,testtype){
   #Prepare assumption for ttest
   d <- ggplot2::ggplot(dat, aes(sample=height, group=gender, colour=gender))+geom_qq()+geom_qq_line()+xlab("theoretical")+ylab("sample")
 
-  e <- dat %>% group_by(gender) %>% summarise(n=n(),mu=mean(height),sd=sd(height))
+  e <- dat %>% dplyr::group_by(gender) %>% dplyr::summarise(n=n(),mu=mean(height),sd=sd(height))
 
   #Preapre assumption for chitest
-  datm <- dat %>% filter(gender=="Male") %>% select(phys)
-  datf <- dat %>% filter(gender=="Female") %>% select(phys)
+  datm <- dat %>% dplyr::filter(gender=="Male") %>% dplyr::select(phys)
+  datf <- dat %>% dplyr::filter(gender=="Female") %>% dplyr::select(phys)
 
-  datmn <- datm %>% filter(phys=="None") %>% count()
-  datmm <- datm %>% filter(phys=="Moderate") %>% count()
-  datmi <- datm %>% filter(phys=="Intense") %>% count()
+  datmn <- datm %>% dplyr::filter(phys=="None") %>% dplyr::count()
+  datmm <- datm %>% dplyr::filter(phys=="Moderate") %>% dplyr::count()
+  datmi <- datm %>% dplyr::filter(phys=="Intense") %>% dplyr::count()
 
-  datfn <- datf %>% filter(phys=="None") %>% count()
-  datfm <- datf %>% filter(phys=="Moderate") %>% count()
-  datfi <- datf %>% filter(phys=="Intense") %>% count()
+  datfn <- datf %>% dplyr::filter(phys=="None") %>% dplyr::count()
+  datfm <- datf %>% dplyr::filter(phys=="Moderate") %>% dplyr::count()
+  datfi <- datf %>% dplyr::filter(phys=="Intense") %>% dplyr::count()
 
   table <- dplyr::tibble(Male=c(datmn[[1]],datmm[[1]],datmi[[1]]),Female=c(datfn[[1]],datfm[[1]],datfi[[1]]))
 
   if (testtype=="lm"){
-    print((a+b)/c)
+    (a+b)/c
   } else if (testtype=="ttest"){
-    print(d)
+    d
   } else if (testtype=="chitest"){
-    print(table)
+    table
   }
 }
 
