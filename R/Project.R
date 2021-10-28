@@ -10,7 +10,7 @@
 assumption <- function(x){
   dat <- readr::read_csv(x,show_col_types = FALSE)
   D <- lm(height ~ weight,dat)
-  a <- ggplot(dat)+geom_point(mapping=aes(x=height,y=weight))+geom_abline(intercept = D$coefficients[[1]],slope=D$coefficients[[2]],lwd=2)+ggtitle("I) Y vs X")
+  a <- ggplot(dat,aes(x=height,y=weight))+ geom_point() + stat_smooth(method="lm", col="red") +ggtitle("I) Y vs X")
 
   b <- ggplot(dat)+geom_point(mapping=aes(x=D$fitted.values ,y=D$residuals)) + geom_hline(yintercept=0,lwd=2)+ggtitle("II) Residual plot")+ylab("Residuals")+xlab("Fitted values")
 
