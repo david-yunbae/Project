@@ -1,0 +1,20 @@
+Package: Project
+Title: Output data analysis outcomes for report.
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Yunbae",
+           family = "Chae",
+           role = c("aut", "cre"),
+           email = "yunbae.chae@mq.students.edu.au",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package stores functions useful to run the statistical tests outlined in the project prompts.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    readr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
